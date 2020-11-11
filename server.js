@@ -223,13 +223,7 @@ async function eng2jap(sourceText) {
   // Translates some text into Japanese
   const [translation] = await translate.translate(sourceText, target_lang);
   const [re_translation] = await translate.translate(translation, source_lang);
-  // console.log(`Source: ${sourceText}`);
-  // console.log(`Japanese: ${translation}`);
-  // console.log(`Re-translate: ${re_translation}`);
-  // socket.emit('transcript', {
-  //     'translation': translation,
-  //     're_translation': re_translation
-  // });
+
   return { translation, re_translation };
 }
 
