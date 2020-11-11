@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "quick-glow-272202",
+  "private_key_id": "29c343b350d0d6bed3f4240169f1329ff1ab1edb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCoDfLqxQ+dmY0f\nWvfDBZWJ8X02KNhauYe1cZ8Fd34uX9OZPXCdjGJU5HTmk3fpFA6yxsO8y2sTWYBp\nRkIDKpodkOqC7SLX4z+YKlw/hPzFFx1iOCaTC1Kesq/RDqH72TWJWZ+bYkDiNaXb\nHQ041sjAHsRn13+kqaEtawi/7fnRT65f8+wF2SK6gl8gUGuUWEhe119xDU0XKz7i\nWJTwyS48qXgntN0iQsDMAmJ8/jp8Xq/Gv06O/LR9mBdKZ3R67qkqYUYH0DzrT61H\nWdiINnJUdH4turqPL2BLDwd72gDo0zHuqmZKXd0NgQUTuymFPPyc7bV/DcJQB5X/\nhj5ITMqtAgMBAAECggEADP1tCDAcxaQTmDeeHJ0/Ipc/xDKyjIq4PnJupgvHPVrr\nXnY1EPyDskepcJQ4CdRi0XdTNHHt0CRULG8BlcCSgpQLyHx/e7wFU6P8lu1W434m\np4urEaUnqPwrYme05iRzQq9iiq500PdwH0h21+ykPlNyf4tVAruY6YuTNNC2hXL4\n7+Gc1k9wPAqdT3KjCybo8ajq9pI81Dj3vKRZ0k0dKWDrQFSIZpoS3Sx3t7v9Utcd\nlo1iTvB6JAW0c+DQRbGDq4YQcn2ZlVoALLsLwvHMVuJb8fnyX9yJXdDsSyWr7j9m\n7Ox4UHTPTpwF/K80jFISxvOXZRiLxLYNyL7BT2716QKBgQDZcrYuADmPL0naq097\n3yooS0DnjCZ60uRsoJWyv+3MgyVc+GuOf+ah5newvecEO+RZOy5Q4zg4xeJNK1uK\nA2+i2+wOudtjKKJhpp2pw9QVJ5TzjGOVEHAD5DBg7MLBm8OXCxdELeZ8sfC1o+o+\nsrJFSPbWvyDbSo70V5DMH7Up1QKBgQDF2WqH6j6VelMEoxg7z+pw2pp3kPO8+wxk\nSULng8BCOpRcAlVV546LTtdGDszFL/fvV+H0rAS1tQOnP2NvifcNodeY764fXOTv\nAoxGhO8XQ00JA91gTYSQZcs6EYMPjJE1BK5FeiPg5hCQfZ18VoWOez/qDCx7ntr2\nCQKYUOFxeQKBgACXMSt60K004ax4XqTlfEXTvn9igBBBVmF9JirwHoM5r/ZKrnAa\npNO3vod6XJBEYWBkqsGJfHObBfxTq9H6JGl6029Ozeu9BoPhYfg+EetkyiDHNtYG\nz2cTTZZVzkmcVLGqVAvZXBDmotK7eT1mWtmZUyJOLpap4y2Ct1/2jhVpAoGBAICS\nWn16xzLibGK+DjiIVAUEuo7q3so3pwTg6x6CawVfBhyI06XgtaxoDtOTOJUIKCoc\nxVT4GJNwz6/3LIpGcQsl2nKjh1cQSiHcWQZWyv0mGkC6hzlXBsfDrv7MdIw9P/vh\nT9MMnZZATBFp4Fb17xL5mz5grOOlBwwOLOaI4QiZAoGAC/miNTKVifLe3Q3PO4Di\nJICOX2l6ipeBM9eBOwT1KgJdCCUaFtNcummmveg6lWdZzIB3vBz7Tt9frD/4D5Lu\n/u3e2HNWqykR6zJKM9yEEIo2y9A+EVFz0pFxoDqHAf4SjmTJfmwTEB7qUwZukhm3\n5R6ewNSPfir//9BWcwzJwfc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "tuan-nganh@quick-glow-272202.iam.gserviceaccount.com",
+  "client_id": "114266114086790476248",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tuan-nganh%40quick-glow-272202.iam.gserviceaccount.com"
+}

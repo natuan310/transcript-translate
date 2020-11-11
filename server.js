@@ -1,5 +1,6 @@
 require('dotenv').config();
 const projectId = process.env.PROJECT_ID;
+const apiKey = process.env.API_KEY;
 const port = process.env.PORT || 3000;
 
 const languageCode = 'en-US';
@@ -152,7 +153,10 @@ function setupServer() {
  */
 function setupSTT() {
   // Creates a client
-  speechClient = new speech.SpeechClient();
+  speechClient = new speech.SpeechClient({
+    projectId: projectId,
+    auth: apiKey
+  });
 
   // Create the initial request object
   // When streaming, this is the first call you will
@@ -207,7 +211,10 @@ async function transcribeAudioStream(audio, cb) {
 const { Translate } = require('@google-cloud/translate').v2;
 
 // Instantiates a client
-const translate = new Translate({ projectId });
+const translate = new Translate({
+  projectId: projectId,
+  auth: apiKey
+});
 
 // Function to translate text
 async function eng2jap(sourceText) {
