@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 const projectId = process.env.PROJECT_ID;
 const apiKey = process.env.API_KEY;
 const port = process.env.PORT || 3000;
