@@ -63,6 +63,7 @@ startRecording.onclick = function () {
 
             // as soon as the stream is available
             ondataavailable: function (blob) {
+                console.log('Sendind data!')
                 // making use of socket.io-stream for bi-directional
                 // streaming, create a stream
                 var stream = ss.createStream();
