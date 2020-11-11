@@ -35,6 +35,7 @@ startRecording.onclick = function () {
     navigator.getUserMedia({
         audio: true
     }, function (stream) {
+        console.log('Start streaming!')
         recordAudio = RecordRTC(stream, {
             type: 'audio',
             mimeType: 'audio/webm',
@@ -68,7 +69,6 @@ startRecording.onclick = function () {
                 // stream directly to server
                 // it will be temp. stored locally
                 ss(socket).emit('stream-transcribe', stream, {
-                    name: 'stream.wav',
                     size: blob.size
                 });
                 // pipe the audio blob to the read stream

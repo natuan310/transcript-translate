@@ -153,10 +153,10 @@ function setupServer() {
  */
 function setupSTT() {
   // Creates a client
-  speechClient = new speech.SpeechClient({
-    projectId: projectId,
-    auth: apiKey
-  });
+  speechClient = new speech.SpeechClient({});
+  if (speechClient) {
+    console.log("Speech Client Created")
+  }
 
   // Create the initial request object
   // When streaming, this is the first call you will
@@ -188,9 +188,6 @@ async function transcribeAudioStream(audio, cb) {
     .on('data', function (data) {
       // console.log(data);
 
-      // let res = data['results'][0]['alternatives'][0].transcript;
-      // console.log(res);
-
       cb(data);
     })
     .on('error', (e) => {
@@ -211,16 +208,14 @@ async function transcribeAudioStream(audio, cb) {
 const { Translate } = require('@google-cloud/translate').v2;
 
 // Instantiates a client
-const translate = new Translate({
-  projectId: projectId,
-  auth: apiKey
-});
+const translate = new Translate({ projectId });
+
+if (translate) {
+  console.log("Translate Client Created")
+}
 
 // Function to translate text
 async function eng2jap(sourceText) {
-
-  // let sourceText = transcript[0].alternatives[0].transcript;
-  // console.log(sourceText);
   // The target language
   const source_lang = 'en';
   const target_lang = 'ja';
