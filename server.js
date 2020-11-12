@@ -210,7 +210,7 @@ if (translate) {
   console.log("Translate Client Created")
 }
 
-// Function to translate text
+// Function to translate Eng to Jap text
 async function eng2jap(sourceText) {
   // The target language
   const source_lang = 'en';
@@ -223,6 +223,8 @@ async function eng2jap(sourceText) {
   return { translation, re_translation };
 }
 
+
+// Function to translate Jap to Eng text
 async function jap2eng(sourceText) {
   // The target language
   const source_lang = 'ja';
