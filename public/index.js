@@ -23,19 +23,23 @@ socketio.on('translate', function (data) {
 
 const startRecording = document.getElementById('start-recording');
 const stopRecording = document.getElementById('stop-recording');
+
 let recordAudio;
 
 // on start button handler
 startRecording.onclick = function () {
     // recording started
     startRecording.disabled = true;
-
+    const speechLanguage = document.getElementById('language').selectedOptions[0].value;
+    console.log(speechLanguage)
+    socketio.emit('streaming', speechLanguage)
     // make use of HTML 5/WebRTC, JavaScript getUserMedia()
     // to capture the browser microphone stream
     navigator.getUserMedia({
         audio: true
     }, function (stream) {
         console.log('Start streaming!')
+
         recordAudio = RecordRTC(stream, {
             type: 'audio',
             mimeType: 'audio/webm',
@@ -70,7 +74,8 @@ startRecording.onclick = function () {
                 // stream directly to server
                 // it will be temp. stored locally
                 ss(socket).emit('stream-transcribe', stream, {
-                    size: blob.size
+                    size: blob.size,
+                    lang: speechLanguage
                 });
                 // pipe the audio blob to the read stream
                 ss.createBlobReadStream(blob).pipe(stream);

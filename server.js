@@ -3,7 +3,7 @@ const projectId = process.env.PROJECT_ID;
 const apiKey = process.env.API_KEY;
 const port = process.env.PORT || 3000;
 
-const languageCode = 'ja-JP';
+var languageCode = 'ja-JP';
 let encoding = 'LINEAR16';
 
 const singleUtterance = true;
@@ -60,20 +60,36 @@ function setupServer() {
   io.on('connect', (client) => {
     console.log(`Client connected [id=${client.id}]`);
     client.emit('server_setup', `Server connected [id=${client.id}]`);
-
+    client.on('streaming', (data) => {
+      languageCode = data;
+      console.log(languageCode)
+      setupSTT()
+    })
     // when the client sends 'stream-transcribe' events
     // when using audio streaming
     ss(client).on('stream-transcribe', function (stream, data) {
       console.log('Receiving data!')
+      // Get Language Code from client
+
       // make a detectIntStream call
       transcribeAudioStream(stream, async function (results) {
         // console.log(results['results'][0]['alternatives'][0].transcript)
+
         client.emit('transcript', results);
 
         transcript = results['results'][0]['alternatives'][0].transcript
-        let res = await eng2jap(transcript);
-        // console.log(res)
-        client.emit('translate', res)
+        if (languageCode === 'en-US') {
+          let res = await eng2jap(transcript);
+          // console.log(res)
+          client.emit('translate', res)
+        }
+        else {
+          let res = await jap2eng(transcript);
+          // console.log(res)
+          client.emit('translate', res)
+        }
+
+
       });
 
 
@@ -174,4 +190,3 @@ async function jap2eng(sourceText) {
 
 
 setupServer();
-setupSTT();
