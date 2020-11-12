@@ -20,7 +20,6 @@ const speechContexts = [
 ]
 
 // console.log(projectId);
-
 // ----------------------
 
 
@@ -88,11 +87,7 @@ function setupServer() {
           // console.log(res)
           client.emit('translate', res)
         }
-
-
       });
-
-
     });
   });
 }
@@ -133,8 +128,6 @@ function setupSTT() {
 async function transcribeAudioStream(audio, cb) {
   const recognizeStream = speechClient.streamingRecognize(requestSTT)
     .on('data', function (data) {
-      // console.log(data);
-
       cb(data);
     })
     .on('error', (e) => {
@@ -146,7 +139,6 @@ async function transcribeAudioStream(audio, cb) {
 
   audio.pipe(recognizeStream);
   audio.on('end', function () {
-    //fileWriter.end();
   });
 };
 

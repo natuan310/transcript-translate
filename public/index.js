@@ -10,15 +10,15 @@ const socket = socketio.on('connect', function () {
 const resultpreview = document.getElementById('results');
 socketio.on('transcript', function (data) {
     if (data && data.results[0] && data.results[0].alternatives[0]) {
-        resultpreview.innerHTML += data.results[0].alternatives[0].transcript + "\n";
+        resultpreview.innerHTML = data.results[0].alternatives[0].transcript + "\n" + resultpreview.value;
     }
 });
 
 const translation = document.getElementById('translation');
 const re_translation = document.getElementById('re_translation');
 socketio.on('translate', function (data) {
-    translation.innerHTML += data.translation + "\n"
-    re_translation.innerHTML += data.re_translation + "\n"
+    translation.innerHTML = data.translation + "\n" + translation.value;
+    re_translation.innerHTML = data.re_translation + "\n" + re_translation.value;
 });
 
 const startRecording = document.getElementById('start-recording');
