@@ -3,7 +3,7 @@ const projectId = process.env.PROJECT_ID;
 const apiKey = process.env.API_KEY;
 const port = process.env.PORT || 3000;
 
-const languageCode = 'en-US';
+const languageCode = 'ja-JP';
 let encoding = 'LINEAR16';
 
 const singleUtterance = true;
@@ -27,14 +27,14 @@ const speechContexts = [
 // load all the libraries for the server
 const fs = require('fs');
 const path = require('path');
-const cors = require('cors');
-const http = require('http');
+// const cors = require('cors');
 const express = require('express');
-const socketIo = require('socket.io')
+const app = express();
+const httpServer = require('http').createServer(app);
+
+const io = require('socket.io')(httpServer);
 const ss = require('socket.io-stream');
 
-const app = express();
-var server;
 // var sessionId, sessionClient, sessionPath, request;
 // var speechClient, requestSTT, ttsClient, requestTTS, mediaTranslationClient, requestMedia;
 var speechClient, requestSTT;
@@ -47,13 +47,12 @@ const speech = require('@google-cloud/speech');
 
 function setupServer() {
   // setup Express
-  app.use(cors());
   app.get('/', function (req, res) {
     res.render(path.join('index.html'));
   });
-  server = http.createServer(app);
-  const io = socketIo(server);
-  server.listen(process.env.PORT || 3000, () => {
+
+
+  httpServer.listen(process.env.PORT || 3000, () => {
     console.log('Server started!');
   });
 
@@ -103,10 +102,7 @@ function setupServer() {
     // when the client sends 'stream-transcribe' events
     // when using audio streaming
     ss(client).on('stream-transcribe', function (stream, data) {
-      // get the name of the stream
-      // const filename = path.basename(data.name);
-      // pipe the filename to the stream
-      // stream.pipe(fs.createWriteStream(filename));
+      console.log('Receiving data!')
       // make a detectIntStream call
       transcribeAudioStream(stream, async function (results) {
         // console.log(results['results'][0]['alternatives'][0].transcript)
@@ -219,6 +215,18 @@ async function eng2jap(sourceText) {
   // The target language
   const source_lang = 'en';
   const target_lang = 'ja';
+
+  // Translates some text into Japanese
+  const [translation] = await translate.translate(sourceText, target_lang);
+  const [re_translation] = await translate.translate(translation, source_lang);
+
+  return { translation, re_translation };
+}
+
+async function jap2eng(sourceText) {
+  // The target language
+  const source_lang = 'ja';
+  const target_lang = 'en';
 
   // Translates some text into Japanese
   const [translation] = await translate.translate(sourceText, target_lang);
