@@ -61,44 +61,6 @@ function setupServer() {
     console.log(`Client connected [id=${client.id}]`);
     client.emit('server_setup', `Server connected [id=${client.id}]`);
 
-    // // when the client sends 'message' events
-    // // when using simple audio input
-    // client.on('message', async function(data) {
-    //     // we get the dataURL which was sent from the client
-    //     const dataURL = data.audio.dataURL.split(',').pop();
-    //     // we will convert it to a Buffer
-    //     let fileBuffer = Buffer.from(dataURL, 'base64');
-    //     // run the simple detectIntent() function
-    //     const results = await detectIntent(fileBuffer);
-    //     client.emit('results', results);
-    // });
-
-    // // when the client sends 'message' events
-    // // when using simple audio input
-    //   client.on('message-transcribe', async function(data) {
-    //     // we get the dataURL which was sent from the client
-    //     const dataURL = data.audio.dataURL.split(',').pop();
-    //     // we will convert it to a Buffer
-    //     let fileBuffer = Buffer.from(dataURL, 'base64');
-    //     // run the simple transcribeAudio() function
-    //     const results = await transcribeAudio(fileBuffer);
-    //     client.emit('results', results);
-    // });
-
-    // // when the client sends 'stream' events
-    // // when using audio streaming
-    // ss(client).on('stream', function(stream, data) {
-    //   // get the name of the stream
-    //   const filename = path.basename(data.name);
-    //   // pipe the filename to the stream
-    //   stream.pipe(fs.createWriteStream(filename));
-    //   // make a detectIntStream call
-    //   detectIntentStream(stream, function(results){
-    //       console.log(results);
-    //       client.emit('results', results);
-    //   });
-    // });
-
     // when the client sends 'stream-transcribe' events
     // when using audio streaming
     ss(client).on('stream-transcribe', function (stream, data) {
@@ -116,30 +78,6 @@ function setupServer() {
 
 
     });
-
-    // // when the client sends 'tts' events
-    // ss(client).on('tts', function(text) {
-    //   textToAudioBuffer(text).then(function(results){
-    //     console.log(results);
-    //     client.emit('results', results);
-    //   }).catch(function(e){
-    //     console.log(e);
-    //   });
-    // });
-
-    // when the client sends 'stream-media' events
-    // when using audio streaming
-    // ss(client).on('stream-media', function (stream, data) {
-    //   // get the name of the stream
-    //   const filename = path.basename(data.name);
-    //   // pipe the filename to the stream
-    //   stream.pipe(fs.createWriteStream(filename));
-    //   // make a detectIntStream call
-    //   transcribeAudioMediaStream(stream, function (results) {
-    //     console.log(results);
-    //     client.emit('results', results);
-    //   });
-    // });
   });
 }
 
@@ -168,9 +106,6 @@ function setupSTT() {
       languageCode: languageCode
     },
     interimResults: interimResults,
-    //enableSpeakerDiarization: true,
-    //diarizationSpeakerCount: 2,
-    //model: `phone_call`
   }
 }
 
