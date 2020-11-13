@@ -1,9 +1,9 @@
 require('dotenv').config();
 const projectId = process.env.PROJECT_ID;
 const apiKey = process.env.API_KEY;
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8001;
 
-const languageCode = 'en-US';
+var languageCode = 'en-US';
 let encoding = 'LINEAR16';
 
 const singleUtterance = true;
@@ -43,33 +43,40 @@ const io = new socketIo.Server(server, { cors: { origin: '*' } });
 
 
 io.on('connection', (socket) => {
-    console.log(`Client connect ${socket.id}`)
-    socket.emit('server-send', {
-        msg: 'server'
-    });
-
-    socket.on('client-send', (data) => {
-        console.log(data);
-    });
-
-    setupSTT();
-
+    console.log(`socket connected [id=${socket.id}]`);
+    socket.emit('server_setup', `Server connected [id=${socket.id}]`);
+    socket.on('streaming', (data) => {
+        languageCode = data;
+        console.log(languageCode)
+        setupSTT()
+    })
+    // when the socket sends 'stream-transcribe' events
+    // when using audio streaming
     ss(socket).on('stream-transcribe', function (stream, data) {
-        console.log('Receiving data!')
+        console.log('Receiving stream!')
+        // Get Language Code from socket
+
         // make a detectIntStream call
         transcribeAudioStream(stream, async function (results) {
             // console.log(results['results'][0]['alternatives'][0].transcript)
+            console.log("Sending transcript")
             socket.emit('transcript', results);
 
             transcript = results['results'][0]['alternatives'][0].transcript
-            let res = await eng2jap(transcript);
-            // console.log(res)
-            socket.emit('translate', res)
+            if (languageCode === 'en-US') {
+                let res = await eng2jap(transcript);
+                console.log("Sending translation")
+                socket.emit('translate', res)
+            }
+            else {
+                let res = await jap2eng(transcript);
+                console.log("Sending translation")
+                socket.emit('translate', res)
+            }
         });
-
-
     });
 });
+
 
 
 /**
@@ -96,9 +103,6 @@ function setupSTT() {
             languageCode: languageCode
         },
         interimResults: interimResults,
-        //enableSpeakerDiarization: true,
-        //diarizationSpeakerCount: 2,
-        //model: `phone_call`
     }
 }
 
@@ -110,8 +114,6 @@ function setupSTT() {
 async function transcribeAudioStream(audio, cb) {
     const recognizeStream = speechClient.streamingRecognize(requestSTT)
         .on('data', function (data) {
-            // console.log(data);
-
             cb(data);
         })
         .on('error', (e) => {
@@ -123,7 +125,6 @@ async function transcribeAudioStream(audio, cb) {
 
     audio.pipe(recognizeStream);
     audio.on('end', function () {
-        //fileWriter.end();
     });
 };
 
@@ -138,7 +139,7 @@ if (translate) {
     console.log("Translate Client Created")
 }
 
-// Function to translate text
+// Function to translate Eng to Jap text
 async function eng2jap(sourceText) {
     // The target language
     const source_lang = 'en';
@@ -151,3 +152,16 @@ async function eng2jap(sourceText) {
     return { translation, re_translation };
 }
 
+
+// Function to translate Jap to Eng text
+async function jap2eng(sourceText) {
+    // The target language
+    const source_lang = 'ja';
+    const target_lang = 'en';
+
+    // Translates some text into Japanese
+    const [translation] = await translate.translate(sourceText, target_lang);
+    const [re_translation] = await translate.translate(translation, source_lang);
+
+    return { translation, re_translation };
+}

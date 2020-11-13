@@ -56,36 +56,36 @@ function setupServer() {
   });
 
   // Listener, once the client connect to the server socket
-  io.on('connect', (client) => {
-    console.log(`Client connected [id=${client.id}]`);
-    client.emit('server_setup', `Server connected [id=${client.id}]`);
-    client.on('streaming', (data) => {
+  io.on('connect', (socket) => {
+    console.log(`socket connected [id=${socket.id}]`);
+    socket.emit('server_setup', `Server connected [id=${socket.id}]`);
+    socket.on('streaming', (data) => {
       languageCode = data;
       console.log(languageCode)
       setupSTT()
     })
-    // when the client sends 'stream-transcribe' events
+    // when the socket sends 'stream-transcribe' events
     // when using audio streaming
-    ss(client).on('stream-transcribe', function (stream, data) {
+    ss(socket).on('stream-transcribe', function (stream, data) {
       console.log('Receiving data!')
-      // Get Language Code from client
+      // Get Language Code from socket
 
       // make a detectIntStream call
       transcribeAudioStream(stream, async function (results) {
         // console.log(results['results'][0]['alternatives'][0].transcript)
 
-        client.emit('transcript', results);
+        socket.emit('transcript', results);
 
         transcript = results['results'][0]['alternatives'][0].transcript
         if (languageCode === 'en-US') {
           let res = await eng2jap(transcript);
           // console.log(res)
-          client.emit('translate', res)
+          socket.emit('translate', res)
         }
         else {
           let res = await jap2eng(transcript);
           // console.log(res)
-          client.emit('translate', res)
+          socket.emit('translate', res)
         }
       });
     });
@@ -179,6 +179,5 @@ async function jap2eng(sourceText) {
 
   return { translation, re_translation };
 }
-
 
 setupServer();
